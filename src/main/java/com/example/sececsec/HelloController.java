@@ -26,6 +26,7 @@ public class HelloController {
 
         this.messageFromFriend();
 
+        new DBOperations().AddMessage(0, msg);
     }
 
     protected void messageFromFriend() {

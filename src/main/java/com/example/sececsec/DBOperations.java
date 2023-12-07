@@ -24,6 +24,32 @@ public class DBOperations {
 
         return false;
     }
+
+    public boolean validateUsers(String Username, String Password) {
+        try (Connection connection = MySQLConnector.connect()) {
+            String query = "SELECT * From user where username = ? and password = ?;";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, Username);
+                preparedStatement.setString(2, Password);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    int count = 0;
+
+                    while (resultSet.next()){
+                        count++;
+                    }
+
+                    if (count == 1){
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
 
 
